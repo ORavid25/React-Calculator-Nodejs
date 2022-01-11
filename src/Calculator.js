@@ -6,34 +6,34 @@ const Calculator = () => {
   const [currentInput, setCurrentInput] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
-  
 
-    const getCalcResult = async (firstNum,secondNum,operator) => {
+
+  const getCalcResult = async (firstNum, secondNum, operator) => {
     const req = {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-        },
-        body: JSON.stringify({firstNum:firstNum,secondNum:secondNum,operator:operator})
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify({ firstNum: firstNum, secondNum: secondNum, operator: operator })
     };
-    try{
-        const res = await fetch(`http://localhost:3000/calc`,req);
-        if(res.status!==201 && res.status!==200) return console.log(res);
-        const data = await res.json(); 
-        console.log(data);
-        return data;
+    try {
+      const res = await fetch(`http://localhost:3000/calc`, req);
+      if (res.status !== 201 && res.status !== 200) return console.log(res);
+      const data = await res.json();
+      console.log(data);
+      return data;
     }
-    catch(error){
-        console.log(error);
-        return null;
+    catch (error) {
+      console.log(error);
+      return null;
     }
   }
 
   useEffect(async () => {
     const res = await fetch("http://localhost:3000/api")
-    console.log("fetch /api",res);
+    // console.log("fetch /api",res);
   })
 
 
@@ -63,17 +63,29 @@ const Calculator = () => {
 
   const getResult = async () => {
 
-    const res = await getCalcResult(previousInput,currentInput,operator);
+    const res = await getCalcResult(previousInput, currentInput, operator);
     setResult(res);
-    console.log("result after is:",res)
+    // console.log("result after is:",res)
 
   }
 
-  useEffect(() => {
+  const nextCalc = async () => {
+    if (operator === "") {
+      return;
+    };
+    console.log("seccuess");
+    setPreviousInput(result);
+    setResult("");
+    setCurrentInput("");
+  }
+
+  useEffect(async () => {
+
+    await nextCalc();
     console.log("current", currentInput);
     console.log("previous", previousInput);
-    console.log("Operator",operator);
-  });
+    console.log("Operator", operator);
+  }, [setOperator]);
 
   return (
     <div className="mainDiv">
@@ -81,10 +93,10 @@ const Calculator = () => {
         <div dir="rtl" className="outputDiv">
           <div className="previous">
             {/* <p>{operator}{previousInput}{operator && currentInput}</p> */}
-            <p>{result ? previousInput + operator + currentInput : operator + previousInput}</p>
+            <p>{result ? currentInput + operator + previousInput : operator + previousInput}</p>
           </div>
           <div className="current">
-            <p>{result ? result:currentInput}</p>
+            <p>{result ? result : currentInput}</p>
           </div>
         </div>
         <div className="buttonsDiv">
@@ -103,7 +115,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-             operator === "" ? setPreviousInput((prev)=> prev + 1) : setCurrentInput((prev) => prev + 1);
+              operator === "" ? setPreviousInput((prev) => prev + 1) : setCurrentInput((prev) => prev + 1);
             }}
           >
             1
@@ -112,7 +124,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 2) : setCurrentInput((prev) => prev + 2);
+              operator === "" ? setPreviousInput((prev) => prev + 2) : setCurrentInput((prev) => prev + 2);
             }}
           >
             2
@@ -120,7 +132,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 3) : setCurrentInput((prev) => prev + 3);
+              operator === "" ? setPreviousInput((prev) => prev + 3) : setCurrentInput((prev) => prev + 3);
 
             }}
           >
@@ -130,7 +142,7 @@ const Calculator = () => {
             className="grid-item"
             onClick={() => {
               operatorChoose("/");
-          
+
             }}
           >
             /
@@ -138,7 +150,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 4) : setCurrentInput((prev) => prev + 4);
+              operator === "" ? setPreviousInput((prev) => prev + 4) : setCurrentInput((prev) => prev + 4);
             }}
           >
             4
@@ -146,7 +158,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 5) : setCurrentInput((prev) => prev + 5);
+              operator === "" ? setPreviousInput((prev) => prev + 5) : setCurrentInput((prev) => prev + 5);
 
             }}
           >
@@ -155,7 +167,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 6) : setCurrentInput((prev) => prev + 6);
+              operator === "" ? setPreviousInput((prev) => prev + 6) : setCurrentInput((prev) => prev + 6);
 
             }}
           >
@@ -165,8 +177,8 @@ const Calculator = () => {
             className="grid-item"
             onClick={() => {
               operatorChoose("X");
-           
-              
+
+
             }}
           >
             X
@@ -174,7 +186,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 7) : setCurrentInput((prev) => prev + 7);
+              operator === "" ? setPreviousInput((prev) => prev + 7) : setCurrentInput((prev) => prev + 7);
 
             }}
           >
@@ -183,7 +195,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 8) : setCurrentInput((prev) => prev + 8);
+              operator === "" ? setPreviousInput((prev) => prev + 8) : setCurrentInput((prev) => prev + 8);
             }}
           >
             8
@@ -191,7 +203,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 9) : setCurrentInput((prev) => prev + 9);
+              operator === "" ? setPreviousInput((prev) => prev + 9) : setCurrentInput((prev) => prev + 9);
 
             }}
           >
@@ -201,7 +213,7 @@ const Calculator = () => {
             className="grid-item"
             onClick={() => {
               operatorChoose("-");
-         
+
             }}
           >
             -
@@ -210,7 +222,7 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-                operator === "" ? setPreviousInput((prev)=> prev + 0) : setCurrentInput((prev) => prev + 0);
+              operator === "" ? setPreviousInput((prev) => prev + 0) : setCurrentInput((prev) => prev + 0);
 
             }}
           >
@@ -220,16 +232,16 @@ const Calculator = () => {
             className="grid-item"
             onClick={() => {
               operatorChoose("+");
-         
+
             }}
           >
             +
           </button>
 
           <button className="grid-item"
-          onClick={() => {
-            getResult();
-          }}
+            onClick={() => {
+              getResult();
+            }}
           >=</button>
         </div>
       </div>

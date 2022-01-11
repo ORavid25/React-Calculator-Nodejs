@@ -41,7 +41,7 @@ app.post(`/calc`, (req, res) => {
       result = n1 * n2;
       break;
   }
-  console.log("result for calc is", result);
+  // console.log("result for calc is", result);
   res.json(result);
   
 });
