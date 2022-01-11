@@ -6,6 +6,35 @@ const Calculator = () => {
   const [currentInput, setCurrentInput] = useState("");
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("");
+  
+
+    const getCalcResult = async (firstNum,secondNum,operator) => {
+    const req = {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify({firstNum:firstNum,secondNum:secondNum,operator:operator})
+    };
+    try{
+        const res = await fetch(`http://localhost:3000/calc`,req);
+        if(res.status!==201 && res.status!==200) return console.log(res);
+        const data = await res.json(); 
+        console.log(data);
+        return data;
+    }
+    catch(error){
+        console.log(error);
+        return null;
+    }
+  }
+
+  useEffect(async () => {
+    const res = await fetch("http://localhost:3000/api")
+    console.log("fetch /api",res);
+  })
 
 
 
@@ -32,28 +61,12 @@ const Calculator = () => {
   };
 
 
-  const getResult = () => {
+  const getResult = async () => {
 
-    const firstNum = parseInt(previousInput);
-    const secondNum = parseInt(currentInput);
-
-    let res;
-    switch (operator) {
-        case '+':
-            res = firstNum + secondNum;
-            break;
-        case '-':
-            res = firstNum - secondNum;
-            break;
-        case '/':
-            res = firstNum / secondNum;
-            break;
-        case '*':
-            res = firstNum * secondNum;
-            break;
-    }
+    const res = await getCalcResult(previousInput,currentInput,operator);
     setResult(res);
-    console.log("res is",res)
+    console.log("result after is:",res)
+
   }
 
   useEffect(() => {
