@@ -39,25 +39,11 @@ const Calculator = () => {
 
 
   //let us know which operator was choosed
-  const operatorChoose = (operator) => {
-    if (operator) {
-      switch (operator) {
-        case "/":
-          setOperator("/");
-          break;
-        case "X":
-          setOperator("*");
-          break;
-        case "-":
-          setOperator("-");
-          break;
-        case "+":
-          setOperator("+");
-          break;
+  const operatorChoose = (operator1) => {
+      if(operator){
+        nextCalc();
       }
-    } else {
-      return;
-    }
+   
   };
 
 
@@ -66,13 +52,10 @@ const Calculator = () => {
     const res = await getCalcResult(previousInput, currentInput, operator);
     setResult(res);
     // console.log("result after is:",res)
-
   }
 
   const nextCalc = async () => {
-    if (operator === "") {
-      return;
-    };
+    
     console.log("seccuess");
     setPreviousInput(result);
     setResult("");
@@ -81,7 +64,7 @@ const Calculator = () => {
 
   useEffect(async () => {
 
-    await nextCalc();
+   
     console.log("current", currentInput);
     console.log("previous", previousInput);
     console.log("Operator", operator);
@@ -93,7 +76,7 @@ const Calculator = () => {
         <div dir="rtl" className="outputDiv">
           <div className="previous">
             {/* <p>{operator}{previousInput}{operator && currentInput}</p> */}
-            <p>{result ? currentInput + operator + previousInput : operator + previousInput}</p>
+            <p>{result ? previousInput + operator + currentInput : operator + previousInput}</p>
           </div>
           <div className="current">
             <p>{result ? result : currentInput}</p>
@@ -141,7 +124,10 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-              operatorChoose("/");
+              if(operator !==""){
+                nextCalc();
+              }
+              setOperator("/");
 
             }}
           >
@@ -176,9 +162,10 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-              operatorChoose("X");
-
-
+              if(operator !==""){
+                nextCalc();
+              }
+              setOperator("*");
             }}
           >
             X
@@ -212,8 +199,10 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-              operatorChoose("-");
-
+              if(operator !==""){
+                nextCalc();
+              }
+              setOperator("-");
             }}
           >
             -
@@ -231,8 +220,10 @@ const Calculator = () => {
           <button
             className="grid-item"
             onClick={() => {
-              operatorChoose("+");
-
+              if(operator !==""){
+                nextCalc();
+              }
+              setOperator("+");
             }}
           >
             +
