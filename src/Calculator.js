@@ -31,27 +31,13 @@ const Calculator = () => {
     }
   }
 
-  useEffect(async () => {
-    const res = await fetch("http://localhost:3000/api")
-    // console.log("fetch /api",res);
-  })
-
-
-
-  //let us know which operator was choosed
-  const operatorChoose = (operator1) => {
-      if(operator){
-        nextCalc();
-      }
-   
-  };
 
 
   const getResult = async () => {
 
     const res = await getCalcResult(previousInput, currentInput, operator);
     setResult(res);
-    // console.log("result after is:",res)
+
   }
 
   const nextCalc = async () => {
@@ -62,20 +48,12 @@ const Calculator = () => {
     setCurrentInput("");
   }
 
-  useEffect(async () => {
-
-   
-    console.log("current", currentInput);
-    console.log("previous", previousInput);
-    console.log("Operator", operator);
-  }, [setOperator]);
 
   return (
     <div className="mainDiv">
       <div className="calcWrapper">
         <div dir="rtl" className="outputDiv">
           <div className="previous">
-            {/* <p>{operator}{previousInput}{operator && currentInput}</p> */}
             <p>{result ? previousInput + operator + currentInput : operator + previousInput}</p>
           </div>
           <div className="current">
