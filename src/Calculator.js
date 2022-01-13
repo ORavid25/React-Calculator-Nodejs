@@ -8,7 +8,7 @@ const Calculator = () => {
   const [result, setResult] = useState("");
 
 
-  const getCalcResult = async (firstNum, secondNum, operator) => {
+  const getCalcResult = async (n1, n2, operator) => {
     const req = {
       method: "POST",
       headers: {
@@ -16,7 +16,7 @@ const Calculator = () => {
         "content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
       },
-      body: JSON.stringify({ firstNum: firstNum, secondNum: secondNum, operator: operator })
+      body: JSON.stringify({ n1: n1, n2: n2, operator: operator })
     };
     try {
       const res = await fetch(`http://localhost:3000/calc`, req);

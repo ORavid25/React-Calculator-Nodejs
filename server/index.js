@@ -39,16 +39,16 @@ app.use(
 /**
  * @swagger
  * components:
- *    schema:
- *       calc: 
- *           type: object
- *           properties:
- *               n1: 
- *                   type: integer
- *               n2: 
- *                   type: integer
- *               operator: 
- *                   type: string
+ *      schemas:
+ *          calc: 
+ *             type: object
+ *             properties:
+ *                       n1: 
+ *                         type: integer
+ *                       n2: 
+ *                         type: integer
+ *                       operator: 
+ *                         type: string
  * 
  */
 
@@ -74,15 +74,18 @@ app.get("/api", (req, res) => {
 /**
  * @swagger
  * /calc:
- *    post:
- *      summery: used to insert data to make calculation between 2 numbers
- *      description: 'the POST method accepts 3 arguments : n1,n2,operator and  the result for calculation.'
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                     $ref: '#components/schema/calc'
+ *      post:
+ *         summary: used to insert data to make calculation between 2 numbers
+ *         description: 'the POST method accepts 3 arguments : n1,n2,operator and  the result for calculation.'
+ *         responses:
+ *             200:
+ *                 description: returns the sum of 2 numbers
+ *         requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                     schema:
+ *                        $ref: '#components/schemas/calc'
  */
 
 app.post(`/calc`, (req, res) => {
